@@ -1,5 +1,3 @@
-# auto_snitcher
-will update soon but enjoy the free cfbm method and captcha bypass
-
-
-selling bypass for this for $500 contact info in about me
+Create a folder called "Blacklist".
+Other instructions are commented in the code.
+For help DM me. (Contact info in about me.)
