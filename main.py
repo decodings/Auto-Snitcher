@@ -7,43 +7,48 @@ def cout(input):
 
 class Main:
     def __init__(self):
-        self.watchingToken = 'x'
-        self.snitchingToken = 'x'
-        self.capmonsterKey = 'x'
-        self.websiteUrl = 'https://discord.com/'
-        self.websiteKey = 'a9b5fb07-92ff-493f-86fe-352a2803b3df'
-        self.proxy = ''
-        self.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+        self.watchingToken = '' # Token that will detect tickets.
+        self.snitchingToken = '' # Token that will DM the users.
+        self.proxy = '' # Proxy is required to make sure friend tokens will not get captcha.
+        self.webhook = '' # Logging webhook.
+        self.threadsAmount = 20 # Friend requests per user. (If it fails to DM.)
         self.guildSettings = [
             {
                 'guildId': 1,
-                'snitchMessage': ':warning: **You joined a fake MM** :warning: \n:exclamation:The server you joined (** %s**), it\'s a **SCAM** and is **BOTTED**\n:white_check_mark: Use a trusted middleman such as: ** discord.gg/auto **\nFOR MORE PROOF DM "++;#0277"\nSome proof: Scroll far down in the members list and check registration and join dates of accounts, they\'re all similar (Botted), check total messages in vouches channel, they\'re too low for such a big server'
+                'snitchMessage': ':warning: **You joined a fake MM** :warning: \n:exclamation:The server you joined (** %s **), it\'s a **SCAM** and is **BOTTED**\n:white_check_mark: Use a trusted middleman such as: ** discord.gg/auto **\nFOR MORE PROOF DM "++;#0277"\nSome proof: Scroll far down in the members list and check registration and join dates of accounts, they\'re all similar (Botted), check total messages in vouches channel, they\'re too low for such a big server'
+            },
+            {
+                'guildId': 2,
+                'snitchMessage': ':warning: **You joined a fake MM** :warning: \n:exclamation:The server you joined (** %s **), it\'s a **SCAM** and is **BOTTED**\n:white_check_mark: Use a trusted middleman such as: ** discord.gg/auto **\nFOR MORE PROOF DM "++;#0277"\nSome proof: Scroll far down in the members list and check registration and join dates of accounts, they\'re all similar (Botted), check total messages in vouches channel, they\'re too low for such a big server'
             }
         ]
-        self.webhook = 'x'
-        with open('tokens.txt', 'r', encoding = 'UTF-8') as file:
+        with open('tokens.txt', 'r', encoding = 'UTF-8') as file: # Tokens that will be used to mass friend.
             self.tokenPool = itertools.cycle(file.read().splitlines())
+        self.userAgent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36'
+        # self.capmonsterKey = ''
+        # self.websiteUrl = 'https://discord.com/'
+        # self.websiteKey = 'a9b5fb07-92ff-493f-86fe-352a2803b3df'
 
-    def getCaptcha(self, rqdata):
-        json = {
-            'clientKey': self.capmonsterKey,
-            'task': {
-                'type': 'HCaptchaTaskProxyless',
-                'websiteURL': self.websiteUrl,
-                'websiteKey': self.websiteKey,
-                'userAgent': self.userAgent,
-                'data': rqdata
-            }
-        }
-        json = {
-            'clientKey': self.capmonsterKey,
-            'taskId': requests.post('https://api.capmonster.cloud/createTask', json = json).json()['taskId']
-        }
-        while True:
-            response = requests.post('https://api.capmonster.cloud/getTaskResult', json = json)
-            if response.json()['status'] == 'ready':
-                return response.json()['solution']['gRecaptchaResponse']
-            time.sleep(3)
+    # def getCaptcha(self, rqdata):
+    #     json = {
+    #         'clientKey': self.capmonsterKey,
+    #         'task': {
+    #             'type': 'HCaptchaTaskProxyless',
+    #             'websiteURL': self.websiteUrl,
+    #             'websiteKey': self.websiteKey,
+    #             'userAgent': self.userAgent,
+    #             'data': rqdata
+    #         }
+    #     }
+    #     json = {
+    #         'clientKey': self.capmonsterKey,
+    #         'taskId': requests.post('https://api.capmonster.cloud/createTask', json = json).json()['taskId']
+    #     }
+    #     while True:
+    #         response = requests.post('https://api.capmonster.cloud/getTaskResult', json = json)
+    #         if response.json()['status'] == 'ready':
+    #             return response.json()['solution']['gRecaptchaResponse']
+    #         time.sleep(3)
 
     def getCfBm(self):
         response = requests.get('https://discord.com/register').text
@@ -84,7 +89,7 @@ class Main:
 
     def createSession(self, token):
         # session = requests.Session()
-        session = tls_client.Session(client_identifier = 'chrome_105')
+        session = tls_client.Session(client_identifier = 'chrome_105') # Bypasses captcha on aged tokens.
         session.headers.update({
             'accept': '*/*',
             'accept-encoding': 'application/json',
@@ -255,7 +260,7 @@ class Main:
                                             ]
                                         }
                                         requests.post(self.webhook, json = json)
-                                        for _ in range(20):
+                                        for _ in range(self.threadsAmount):
                                             threading.Thread(target = self.friend, args = (permissionId,)).start()
                                         json = {
                                             'content': 'Hit raped. :yum:',
