@@ -7,7 +7,7 @@ might as well upload my token setup tool for pfps and about mes incase there r n
 also will make it so u can put a specific tag in the about mes n when a user friends it, it will auto accept n dm them telling abt the fake mm n attach screenshots w proof or wtv
 
 
-# make sure to use 1y+ tokens for dming cuz they dont get captcha, one of the shops I buy them from: tokenu.net
+make sure to use 1y+ tokens for dming cuz they dont get captcha, one of the shops I buy them from: tokenu.net
 
 
 
