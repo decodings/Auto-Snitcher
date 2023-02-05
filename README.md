@@ -1,14 +1,13 @@
 just realized the friend bot didnt use proxies prob removed it accidentally lol anyway, gonna release an on join one when im back from my trip cuz kids bypassed this with threads which u cant access with discord accs
 
 
-might as well upload my token setup tool for pfps and about mes incase there r no mutuals and the token cant dm the users
+might as well upload my token setup tool for pfps and about mes incase there r no mutuals and the token cant dm the user
 
 
 also will make it so u can put a specific tag in the about mes n when a user friends it, it will auto accept n dm them telling abt the fake mm n attach screenshots w proof or wtv
 
 
-
-
+# make sure to use 1y+ tokens for dming cuz they dont get captcha, one of the shops I buy them from: tokenu.net
 
 
 
